@@ -13,8 +13,7 @@ feature:
 formal: ID ':' TYPE;
 
 expr:
-	ID ASSIGNMENT expr
-	| expr ('@' TYPE)? '.' ID '(' (expr (',' expr)*)? ')'
+	expr ('@' TYPE)? '.' ID '(' (expr (',' expr)*)? ')'
 	| ID '(' (expr (',' expr)*)? ')'
 	| IF expr THEN expr ELSE expr FI
 	| WHILE expr LOOP expr POOL
@@ -39,7 +38,8 @@ expr:
 	| INT
 	| STRING
 	| TRUE
-	| FALSE;
+	| FALSE
+	| ID ASSIGNMENT expr;
 
 CLASS: C L A S S;
 
@@ -146,6 +146,7 @@ fragment ESC: '\\' (["\\/bfnrt] | UNICODE);
 fragment UNICODE: 'u' HEX HEX HEX HEX;
 
 fragment HEX: [0-9a-fA-F];
+// comments
 
 OPEN_COMMENT: '(*';
 
@@ -154,6 +155,7 @@ CLOSE_COMMENT: '*)';
 COMMENT: OPEN_COMMENT (COMMENT | .)*? CLOSE_COMMENT -> skip;
 
 ONE_LINE_COMMENT: '--' (~ '\n')* '\n'? -> skip;
+// skip spaces, tabs, newlines, note that \v is not suppoted in antlr
 
 WHITESPACE: [ \t\r\n\f]+ -> skip;
 
