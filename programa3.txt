@@ -1,0 +1,10 @@
+(* Esta es una prueba de aritmetica *)
+class Main inherits IO {
+   a : INT;
+   b : INT;
+   c : INT;
+
+   main(): SELF_TYPE {
+	   a <- a + b * c 
+   };
+};
